@@ -35,18 +35,20 @@ function App() {
   
   return (
     <>
-      <div className=''>
-        
+      <div className='flex bg-background w-full items-center flex-col min-h-screen max-h-fit'>
+        <div className=' w-100 justify-center' >
+        <h1 className='font-bold text-3xl  mb-9'>Recipe Finder App</h1>
         <form onSubmit={searchRecipe} >
           <input 
           value={search} 
           onChange={(e) => setSearch(e.target.value)} 
           type='text'  
-          className='border text-slate-400' >
+          placeholder='Search using an ingredient...'
+          className='border rounded-sm mr-5 w- text-slate-400' >
           </input>
           <button type='submit'  >Search</button>
         </form>
-      </div>
+ 
       {recipes.map(recipe => (
         <div>
         <Recipe key={recipe.recipe.label} 
@@ -58,7 +60,8 @@ function App() {
         ))} />
         </div>
       ))}
-
+       </div>
+      </div>
     </>
   )
 }
