@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import Recipe from './Recipe'
 import { v4 as uuidv4 } from 'uuid';
+import Header from './Header';
 
 
 function App() {
@@ -46,40 +47,45 @@ function App() {
   
   return (
     <>
-      <div className=' bg-background flex  justify-center align-middle min-h-screen max-h-fit'>
-        <div className=' flex flex-col' >
-        <h1 className='font-bold text-3xl  mb-9'>Recipe Finder App</h1>
+      <div className=' bg-background text-center w-full min-h-screen max-h-fit'>
+      <div className=' flex items-center flex-col' >
+        <h1 className='font-bold text-3xl my-5  mb-9'>Recipe Finder App</h1>
         <form onSubmit={searchRecipe} >
-          <div className='flex '>
+          <div className='flex mb-6'>
           <input 
           value={search} 
           onChange={(e) => setSearch(e.target.value)} 
           placeholder='Search...'
-          className='border rounded-sm mr-2 px-7 py-2 w-full ' >
+          className='border rounded-sm px-7 py-2 w-full ' >
           </input>
-          <button type='submit' className='bg-rose-200 py-2 px-6 hover:bg-white transition ease-in-out delay-200'  >Search</button>
+          <button type='submit' className='bg-rose-200 py-2 px-6 hover:bg-rose-300 transition ease-in-out duration-300 delay-200'  >Search</button>
           </div>
         </form>
-   
-      { error? (
-        <div>hiii</div>
-      ): (
-      recipes.map(recipe => (
-        <div className='bg-white w-fit h-fit mb-4 flex flex-wrap'>
-        <Recipe key={uuidv4()} 
-        title={recipe.recipe.label} 
-        image={recipe.recipe.image} 
-        calories={recipe.recipe.calories}
-        ingredients= {recipe.recipe.ingredients.map(ingredient => (
-          <div key={uuidv4()} >{ingredient.text}</div>
-        ))} />
         </div>
-      ))
- 
-       )
-    }
-       </div>
+  
+        {error ? (
+  <div>Error: Something went wrong while fetching recipes.</div>
+) : (
+  <div className="flex flex-wrap items-center justify-around">
+    {recipes.map((recipe) => (
+      <div key={recipe.recipe.url} className="bg-white py-5 items-center  rounded-xl px-5 w-1/2 md:w-1/3 h-50 mb-3 mr-2 flex flex-wrap">
+        <Recipe search={search} searchRecipe={searchRecipe}
+          title={recipe.recipe.label}
+          image={recipe.recipe.image}
+          calories={recipe.recipe.calories}
+          link={recipe.recipe.url}
+          ingredients={recipe.recipe.ingredients.map((ingredient) => (
+            <li key={ingredient.foodID}>{ingredient.text}</li>
+          ))}
+        />
       </div>
+    ))}
+  </div>
+)}
+    </div>
+
+
+
     </>
   )
 }
